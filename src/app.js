@@ -27,14 +27,37 @@ export default async function app(appDiv) {
   newUserFormEl.id = 'new-user-form';
   appDiv.append(newUserFormEl);
   // Render the form!
-  // renderNewUserForm;
+  renderNewUserForm(newUserFormEl);
 
   // Fetch the books!
-  // const books =
+  const books = await getFirstThreeFantasyBooks();
   // render out the books
-  // renderBookList
-
-  // bookListEl.addEventListener('???', () => {})
-
-  // newUserFormEl.addEventListener('???', () => {})
+  renderBookList(bookListEl, books)
+  // Add an event listener to the bookList ul.
+  bookListEl.addEventListener('click', async (e) => {
+    // Check if the clicked element is a button.
+    if(e.target.matches('button')) {
+      // Get the author information and store it in a variable.
+      const author = await getAuthor(e.target.dataset.authorUrlKey);
+      // Render the author information :shrug:
+      renderAuthorInfo(authorInfoEl, author);
+    }
+  })
+  // Add an event listener to the form.
+  newUserFormEl.addEventListener('submit', async (e) => {
+    // Stop the form from refreshing the page.
+    e.preventDefault();
+    // Store the form in a variable for ease of access.
+    const form = e.target;
+    // Get the data from the form.
+    const formData = new FormData(form);
+    // Turn the data from the form into an object.
+    const formObject = Object.fromEntries(formData);
+    // Create the new user using the object with the form data.
+    const newUser = await createNewUser(formObject);
+    // Render the new user.
+    renderNewUser(newUserEl, newUser);
+    // Reset the form.
+    form.reset();
+  })
 }
