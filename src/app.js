@@ -37,7 +37,7 @@ export default async function app(appDiv) {
   bookListEl.addEventListener('click', async (e) => {
     // Check if the clicked element is a button.
     if(e.target.matches('button')) {
-      // Get the author information and store it in a variable.
+      // Get the author information and store it in a constant.
       const author = await getAuthor(e.target.dataset.authorUrlKey);
       // Render the author information :shrug:
       renderAuthorInfo(authorInfoEl, author);
@@ -47,7 +47,7 @@ export default async function app(appDiv) {
   newUserFormEl.addEventListener('submit', async (e) => {
     // Stop the form from refreshing the page.
     e.preventDefault();
-    // Store the form in a variable for ease of access.
+    // Store the form in a constant for ease of access.
     const form = e.target;
     // Get the data from the form.
     const formData = new FormData(form);
